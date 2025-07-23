@@ -1,0 +1,40 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+@use '../../../styles/utilities' as *;
+
+.cart {
+  h1 {
+    @extend .text-center;
+    margin-bottom: 2rem;
+    font-family: $font-main;
+  }
+  .cart-items {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    min-height: 120px;
+    text-align: center;
+  }
+  .cart-summary {
+    text-align: right;
+    p {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    button {
+      background: $primary;
+      color: white;
+      border: none;
+      border-radius: 2rem;
+      padding: 0.75rem 2rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      &:hover:enabled { background: $secondary; }
+      &:disabled { background: $gray-400; cursor: not-allowed; }
+    }
+  }
+}

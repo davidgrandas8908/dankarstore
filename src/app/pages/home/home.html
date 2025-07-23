@@ -1,0 +1,23 @@
+<section class="hero">
+  <h1>Bienvenidos a DankarStore</h1>
+  <p>Primero recibe y después pagas!</p>
+  <button>Navega Ahora</button>
+</section>
+
+<section class="offers">
+  <h2>¡Productos en OFERTA!</h2>
+  <div class="products">
+    <div class="product" *ngFor="let product of products">
+      <img [src]="product.image" [alt]="product.name" />
+      <h3>{{ product.name }}</h3>
+      <p class="price-normal">Precio habitual ${{ product.price | number:'1.0-0' }}</p>
+      <p class="price-offer">Precio de oferta ${{ product.offerPrice | number:'1.0-0' }}</p>
+      <button>Agregar al carrito</button>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <h2>Testimonios</h2>
+  <app-testimonials [testimonials]="testimonials"></app-testimonials>
+</section>

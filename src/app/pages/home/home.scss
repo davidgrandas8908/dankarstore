@@ -1,0 +1,73 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+@use '../../../styles/utilities' as *;
+
+.hero {
+  @include center;
+  flex-direction: column;
+  background: linear-gradient(90deg, $primary 0%, $secondary 50%, $accent 100%);
+  color: white;
+  padding: 3rem 1rem 2rem 1rem;
+  text-align: center;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  h1 {
+    font-family: $font-main;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  button {
+    background: $accent;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    &:hover { background: $secondary; }
+  }
+}
+
+.offers {
+  h2 { @extend .text-center; margin-bottom: 1.5rem; }
+  .products {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    .product {
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      padding: 1.5rem;
+      width: 260px;
+      text-align: center;
+      img {
+        width: 100%;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+      }
+      h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+      .price-normal { color: $gray-700; text-decoration: line-through; }
+      .price-offer { color: $primary; font-weight: bold; font-size: 1.2rem; }
+      button {
+        margin-top: 1rem;
+        background: $primary;
+        color: white;
+        border: none;
+        border-radius: 2rem;
+        padding: 0.5rem 1.5rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        &:hover { background: $secondary; }
+      }
+    }
+  }
+}
+
+.testimonials {
+  margin-top: 3rem;
+  h2 { @extend .text-center; margin-bottom: 1.5rem; }
+}
