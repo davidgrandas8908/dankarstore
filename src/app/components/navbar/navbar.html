@@ -1,9 +1,30 @@
-<nav class="navbar">
+<header class="main-header">
   <div class="logo">DankarStore</div>
+  <div class="header-spacer"></div>
+  <button class="menu-btn" (click)="toggleSidebar()" aria-label="Abrir menú">
+    <i class="fas fa-bars"></i>
+  </button>
+</header>
+<nav class="sidebar" [class.open]="sidebarOpen">
+  <button class="close-btn" (click)="toggleSidebar()" aria-label="Cerrar menú">
+    <i class="fas fa-times"></i>
+  </button>
   <ul class="nav-links">
-    <li><a routerLink="/">Inicio</a></li>
-    <li><a routerLink="/catalog">Catálogo</a></li>
-    <li><a routerLink="/contact">Contacto</a></li>
-    <li><a routerLink="/cart">Carrito</a></li>
+    <li>
+      <a routerLink="/" title="Inicio"><i class="fas fa-home"></i> <span>Inicio</span></a>
+    </li>
+    <li>
+      <a routerLink="/catalog" title="Catálogo"><i class="fas fa-th-large"></i> <span>Catálogo</span></a>
+    </li>
+    <li>
+      <a routerLink="/contact" title="Contacto"><i class="fas fa-envelope"></i> <span>Contacto</span></a>
+    </li>
+    <li>
+      <a routerLink="/cart" title="Carrito">
+        <i class="fas fa-shopping-cart"></i> <span>Carrito</span>
+        <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+      </a>
+    </li>
   </ul>
 </nav>
+<div class="sidebar-backdrop" [class.open]="sidebarOpen" (click)="toggleSidebar()"></div>

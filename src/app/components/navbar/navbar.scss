@@ -2,10 +2,58 @@
 @use '../../../styles/mixins' as *;
 @use '../../../styles/utilities' as *;
 
+.main-header {
+  width: 100vw;
+  min-width: 0;
+  background: $surface;
+  border-bottom: 1px solid $gray-200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  height: 64px;
+  .logo {
+    font-family: $font-main;
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: $primary-dark;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .header-spacer {
+    flex: 1 1 auto;
+  }
+  .menu-btn {
+    display: block;
+    background: none;
+    border: none;
+    color: $primary-dark;
+    font-size: 2rem;
+    padding: 1rem 1.2rem 1rem 2rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    &:hover { color: $accent; }
+    z-index: 1002;
+    margin-right: 0.5rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 64px;
+    display: flex;
+    align-items: center;
+  }
+}
+
 .navbar {
   @include center;
   justify-content: space-between;
-  background: $primary;
+  background: transparent;
   color: white;
   padding: 1rem 2rem;
   .logo {
@@ -13,24 +61,222 @@
     font-size: 1.5rem;
     font-weight: bold;
     letter-spacing: 1px;
+    color: white;
   }
   .nav-links {
     list-style: none;
     display: flex;
-    gap: 2rem;
+    gap: 2.5rem;
     margin: 0;
     padding: 0;
     li {
       a {
         color: white;
         text-decoration: none;
-        font-weight: 500;
-        font-size: 1.1rem;
+        font-size: 1.35rem;
+        display: flex;
+        align-items: center;
+        position: relative;
         transition: color 0.2s;
         &:hover {
           color: $accent;
         }
+        i {
+          font-size: 1.35rem;
+        }
+        .cart-count {
+          background: $accent;
+          color: white;
+          border-radius: 1rem;
+          padding: 0.1rem 0.6rem;
+          font-size: 0.95rem;
+          margin-left: 0.3rem;
+          font-weight: bold;
+          position: absolute;
+          top: -0.7rem;
+          right: -1.1rem;
+        }
       }
     }
+  }
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -310px;
+  width: 300px;
+  height: 100vh;
+  background: $gray-100;
+  color: $gray-900;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.04);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2rem 1.2rem 1.2rem 1.2rem;
+  border-right: 1px solid $gray-200;
+  transition: left 0.3s cubic-bezier(0.4,0,0.2,1);
+  .close-btn {
+    display: block;
+    background: none;
+    border: none;
+    color: $primary-dark;
+    font-size: 2rem;
+    align-self: flex-end;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    &:hover { color: $accent; }
+  }
+  .nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    li {
+      width: 100%;
+      a {
+        color: $gray-700;
+        text-decoration: none;
+        font-size: 1.15rem;
+        display: flex;
+        align-items: center;
+        position: relative;
+        transition: color 0.2s, background 0.2s;
+        width: 100%;
+        gap: 0.8rem;
+        border-radius: 0.5rem;
+        padding: 0.7rem 1rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        background: transparent;
+        overflow: hidden;
+        z-index: 1;
+        // Nueva animación de fondo en hover
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 0;
+          height: 100%;
+          background: linear-gradient(90deg, $primary-light 0%, $primary 100%);
+          opacity: 0.12;
+          z-index: -1;
+          transition: width 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        &:hover::before, &.active::before {
+          width: 100%;
+        }
+        &:hover, &.active {
+          color: $primary;
+          background: transparent;
+          border-radius: 0.5rem;
+          box-shadow: none;
+        }
+        &:active {
+          transform: scale(1.04);
+          transition: transform 0.12s cubic-bezier(0.4,0,0.2,1);
+        }
+        i {
+          font-size: 1.3rem;
+          color: $primary;
+        }
+        span {
+          font-size: 1.08rem;
+        }
+        .cart-count {
+          background: $primary;
+          color: $surface;
+          border-radius: 1rem;
+          padding: 0.1rem 0.6rem;
+          font-size: 0.95rem;
+          margin-left: 0.3rem;
+          font-weight: bold;
+          position: absolute;
+          top: 0.2rem;
+          right: 1.2rem;
+        }
+      }
+    }
+  }
+  &.open {
+    left: 0;
+  }
+}
+
+.sidebar-backdrop {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.18);
+  z-index: 1099;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  &.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+body {
+  background: $background;
+  color: $gray-700;
+  font-family: $font-main;
+  min-width: 320px;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+#root, app-root {
+  min-width: 320px;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+@media (max-width: $breakpoint-md) {
+  .main-header {
+    .menu-btn {
+      display: block;
+    }
+  }
+  .sidebar {
+    left: -310px;
+    width: 90vw;
+    min-width: 180px;
+    max-width: 300px;
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    &.open {
+      left: 0;
+    }
+  }
+  .sidebar-backdrop {
+    display: block;
+  }
+}
+
+@media (max-width: 400px) {
+  .main-header {
+    .logo {
+      font-size: 1.1rem;
+      padding: 0 0.5rem 0 0.5rem;
+    }
+    .menu-btn {
+      font-size: 1.5rem;
+      padding: 1rem 0.5rem 1rem 0.5rem;
+    }
+  }
+  .sidebar {
+    width: 90vw;
+    min-width: 180px;
+    max-width: 250px;
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
   }
 }

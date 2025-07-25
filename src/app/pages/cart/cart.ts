@@ -17,22 +17,27 @@ interface Product {
   styleUrl: './cart.scss'
 })
 export class Cart {
-  // Lista de productos agregados al carrito
   cart: Product[] = [];
 
-  // Inyecta el servicio de carrito y obtiene los productos actuales
   constructor(private cartService: CartService) {
+    this.updateCart();
+  }
+
+  updateCart() {
     this.cart = this.cartService.getCart();
   }
 
-  // Calcula el total del carrito sumando los precios de oferta
   get total() {
     return this.cart.reduce((sum, item) => sum + item.offerPrice, 0);
   }
 
-  // Vacía el carrito de compras
+  remove(product: Product) {
+    this.cartService.removeFromCart(product);
+    this.updateCart();
+  }
+
   clearCart() {
     this.cartService.clearCart();
-    this.cart = [];
+    this.updateCart();
   }
 }

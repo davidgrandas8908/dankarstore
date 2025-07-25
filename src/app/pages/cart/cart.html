@@ -2,11 +2,24 @@
   <h1>Carrito de Compras</h1>
   <div class="cart-items">
     <ng-container *ngIf="cart.length; else emptyCart">
-      <div class="product" *ngFor="let product of cart">
-        <img [src]="product.image" [alt]="product.name" width="60" />
-        <span>{{ product.name }}</span>
-        <span class="price">${{ product.offerPrice | number:'1.0-0' }}</span>
-      </div>
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of cart">
+            <td><img [src]="product.image" [alt]="product.name" width="60" /></td>
+            <td>{{ product.name }}</td>
+            <td>${{ product.offerPrice | number:'1.0-0' }}</td>
+            <td><button (click)="remove(product)">Eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
       <button (click)="clearCart()">Vaciar carrito</button>
     </ng-container>
     <ng-template #emptyCart>

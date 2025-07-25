@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
+import { Subscription } from 'rxjs';
 
 // Interfaz para los productos del catálogo
 interface Product {
@@ -14,11 +15,9 @@ interface Product {
   selector: 'app-catalog',
   imports: [CommonModule],
   templateUrl: './catalog.html',
-  styleUrl: './catalog.scss',
-  providers: [CartService]
+  styleUrl: './catalog.scss'
 })
 export class Catalog {
-  // Lista de productos disponibles en el catálogo
   products: Product[] = [
     {
       name: 'Masajeador Corporal Cervical Cuello',
@@ -39,12 +38,26 @@ export class Catalog {
       image: 'https://dankarstore.com/cdn/shop/files/reloj.jpg?v=1709672012&width=600'
     }
   ];
+  cart: Product[] = [];
+  private sub: Subscription;
 
-  // Inyecta el servicio de carrito para agregar productos
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService) {
+    this.sub = this.cartService.cart$.subscribe(cart => this.cart = cart);
+  }
 
-  // Método para agregar un producto al carrito
-  addToCart(product: Product) {
-    this.cartService.addToCart(product);
+  isInCart(product: Product) {
+    return this.cartService.isInCart(product);
+  }
+
+  addOrRemove(product: Product) {
+    if (this.isInCart(product)) {
+      this.cartService.removeFromCart(product);
+    } else {
+      this.cartService.addToCart(product);
+    }
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Testimonials } from '../../components/testimonials/testimonials';
+import { CartService } from '../../services/cart.service';
+import { Subscription } from 'rxjs';
 
 // Interfaz para los productos en oferta
 interface Product {
@@ -23,7 +25,6 @@ interface Testimonial {
   styleUrl: './home.scss'
 })
 export class Home {
-  // Lista de productos en oferta que se muestran en la página principal
   products: Product[] = [
     {
       name: 'Masajeador Corporal Cervical Cuello',
@@ -38,8 +39,6 @@ export class Home {
       image: 'https://dankarstore.com/cdn/shop/files/proyector.jpg?v=1709672012&width=600'
     }
   ];
-
-  // Lista de testimonios de clientes
   testimonials: Testimonial[] = [
     {
       author: 'Camilo Durán',
@@ -54,4 +53,26 @@ export class Home {
       text: 'Recientemente compré un producto y quedé encantado con el servicio de pago contra entrega y la calidad del producto. ¡No puedo dejar de recomendarlo!'
     }
   ];
+  cart: Product[] = [];
+  private sub: Subscription;
+
+  constructor(private cartService: CartService) {
+    this.sub = this.cartService.cart$.subscribe(cart => this.cart = cart);
+  }
+
+  isInCart(product: Product) {
+    return this.cartService.isInCart(product);
+  }
+
+  addOrRemove(product: Product) {
+    if (this.isInCart(product)) {
+      this.cartService.removeFromCart(product);
+    } else {
+      this.cartService.addToCart(product);
+    }
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 }

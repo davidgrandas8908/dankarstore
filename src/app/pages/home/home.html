@@ -12,7 +12,9 @@
       <h3>{{ product.name }}</h3>
       <p class="price-normal">Precio habitual ${{ product.price | number:'1.0-0' }}</p>
       <p class="price-offer">Precio de oferta ${{ product.offerPrice | number:'1.0-0' }}</p>
-      <button>Agregar al carrito</button>
+      <button (click)="addOrRemove(product)">
+        {{ isInCart(product) ? 'Quitar del carrito' : 'Agregar al carrito' }}
+      </button>
     </div>
   </div>
 </section>
